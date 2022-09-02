@@ -15,7 +15,7 @@ export const generate = (isOptimization: boolean): WebpackConfiguration => {
     const htmlPlugins: HtmlWebpackPlugin[] = [];
 
     // vendor entry
-    entries['vendor'] = ['react', 'react-dom'];
+    entries['vendor'] = ['react', 'react-dom', '@reduxjs/toolkit', 'react-redux'];
 
     // html entries
     const rawEntries = getWebpackEntries(clientRoot);

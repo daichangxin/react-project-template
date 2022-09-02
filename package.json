@@ -7,6 +7,7 @@
         "clean": "rimraf dist/",
         "test": "tsc --noEmit",
         "dev": "NODE_ENV=development webpack serve --config config/webpack.dev.ts",
+        "analyzer": "webpack --config config/webpack.analyzer.ts --progress",
         "build:test": "npm run clean && NODE_ENV=production webpack --config config/webpack.test.ts",
         "build:prod": "npm run clean && cross-env NODE_ENV=production webpack --config config/webpack.prod.ts"
     },
@@ -43,6 +44,7 @@
         "ts-node": "^10.9.1",
         "typescript": "^4.8.2",
         "webpack": "^5.74.0",
+        "webpack-bundle-analyzer": "^4.6.1",
         "webpack-cli": "^4.10.0",
         "webpack-dev-server": "^4.10.1"
     }
