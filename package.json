@@ -49,5 +49,10 @@
         "webpack-bundle-analyzer": "^4.6.1",
         "webpack-cli": "^4.10.0",
         "webpack-dev-server": "^4.10.1"
-    }
+    },
+    "browserslist": [
+        "> 2%",
+        "last 2 versions",
+        "not ie <= 8"
+    ]
 }
