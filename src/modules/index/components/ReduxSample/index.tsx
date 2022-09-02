@@ -24,10 +24,16 @@ export const ReduxSample: FC = () => {
     }, [dispatch]);
 
     return (
-        <div>
+        <div className="flex flex-col items-center">
             <p>hello, count:{count}</p>
-            <button onClick={onIncrementedClick}>incremented</button>
-            <button onClick={onDecrementedClick}>decremented</button>
+            <div>
+                <button className="text-blue-500 mx-3" onClick={onIncrementedClick}>
+                    incremented
+                </button>
+                <button className="text-blue-500 mx-3" onClick={onDecrementedClick}>
+                    decremented
+                </button>
+            </div>
         </div>
     );
 };

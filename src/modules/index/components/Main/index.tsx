@@ -4,9 +4,9 @@ import { ReduxSample } from '../ReduxSample';
 
 export const Main: FC = () => {
     return (
-        <div>
-            <ReduxSample />
+        <div className="flex flex-col min-h-screen items-center justify-center">
             <NormalStyleSample />
+            <ReduxSample />
         </div>
     );
 };

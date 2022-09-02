@@ -22,6 +22,7 @@ React 项目模板
 1. 使用 css-loader 加载 css 样式
 2. 使用 post-css 和 autoprefixer 来适配浏览器
 3. 使用 mini-css-extract-plugin 将样式打包成独立的 css 文件，并 link 到 html 文件中
+4. 内置 tailwindcss 支持，虽然支持 css 样式文件，但依然强烈推荐只使用 tailwindcss 来写样式
 
 ## lint
 
