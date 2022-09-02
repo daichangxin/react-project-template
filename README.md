@@ -34,6 +34,7 @@ React 项目模板
 3. prod 模式下使用 `terser-webpack-plugin` 压缩 js 输出代码
 4. 支持多页面开发，只要有 index.html 文件，则自动匹配同目录下的 index.tsx 文件作为 entry 入口进行编译
 5. 针对多页面开发，有公共代码`autoload.ts`，支持每个页面自动引用，好处是对于所有页面的统一设置可以写在`autoload.ts`里，比如全局样式设置，埋点脚本等。
+6. 内置 analyzer 分析
 
 ## QA
 

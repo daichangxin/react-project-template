@@ -1,4 +1,4 @@
 import './assets/css/global.css';
 import { config } from './config';
 
-console.log(`[autoload] env:${config.ENV}`);
+console.log(`[autoload] env:${config.ENV}, isDev:${config.isDev}`);
