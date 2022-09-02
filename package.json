@@ -9,7 +9,8 @@
         "dev": "NODE_ENV=development webpack serve --config config/webpack.dev.ts",
         "analyzer": "webpack --config config/webpack.analyzer.ts --progress",
         "build:test": "npm run clean && NODE_ENV=production webpack --config config/webpack.test.ts",
-        "build:prod": "npm run clean && cross-env NODE_ENV=production webpack --config config/webpack.prod.ts"
+        "build:prod": "npm run clean && cross-env NODE_ENV=production webpack --config config/webpack.prod.ts",
+        "lint": "eslint src/"
     },
     "keywords": [],
     "author": "",
