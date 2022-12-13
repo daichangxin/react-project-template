@@ -1,9 +1,21 @@
-import fs from 'fs';
-import path from 'path';
+const fs = require('fs');
+const path = require('path');
 
-const getHTMLFiles = (root: string) => {
-    const result: string[] = [];
-    const getFile = (file: string) => {
+/**
+ *
+ * @param root {string}
+ * @returns {string[]}
+ */
+const getHTMLFiles = (root) => {
+    /**
+     * @type {string[]}
+     */
+    const result = [];
+    /**
+     *
+     * @param file {string}
+     */
+    const getFile = (file) => {
         if (fs.statSync(file).isDirectory()) {
             const children = fs.readdirSync(file);
             children.forEach((item) => {
@@ -21,7 +33,12 @@ const getHTMLFiles = (root: string) => {
 };
 
 const entryExtensions = ['.js', '.ts', '.jsx', '.tsx'];
-const getEntryByHTMLFile = (htmlFile: string) => {
+/**
+ *
+ * @param htmlFile {string}
+ * @returns {string}
+ */
+const getEntryByHTMLFile = (htmlFile) => {
     let result = '';
     entryExtensions.some((ext) => {
         const file = htmlFile.replace('.html', ext);
@@ -34,7 +51,12 @@ const getEntryByHTMLFile = (htmlFile: string) => {
     return result;
 };
 
-export const getWebpackEntries = (rootPath: string) => {
+/**
+ *
+ * @param rootPath {string}
+ * @returns {{entry: string, entryName: string, html: string}[]}
+ */
+const getWebpackEntries = (rootPath) => {
     const files = getHTMLFiles(rootPath);
     return files.map((file) => ({
         entryName: path.relative(rootPath, file).replace('.html', ''),
@@ -42,3 +64,5 @@ export const getWebpackEntries = (rootPath: string) => {
         html: file,
     }));
 };
+
+module.exports = { getWebpackEntries };

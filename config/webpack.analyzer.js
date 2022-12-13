@@ -1,13 +1,16 @@
-import DotenvWebpackPlugin from 'dotenv-webpack';
-import { WebpackPluginInstance } from 'webpack';
-import { WebpackConfiguration } from 'webpack-dev-server';
-import { resolve } from './utils/resolve';
-import { generate } from './webpack.base';
+const DotenvWebpackPlugin = require('dotenv-webpack');
+const { WebpackConfiguration } = require('webpack-dev-server');
+const { resolve } = require('./utils/resolve');
+const { generate } = require('./webpack.base');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const base = generate(false);
-const basePlugins = base.plugins as WebpackPluginInstance[];
+const basePlugins = base.plugins;
 
+/**
+ *
+ * @type {WebpackConfiguration}
+ */
 const config = {
     ...base,
     devServer: {
@@ -22,6 +25,6 @@ const config = {
         historyApiFallback: true,
     },
     plugins: [...basePlugins, new DotenvWebpackPlugin({ path: resolve('.env') }), new BundleAnalyzerPlugin()],
-} as WebpackConfiguration;
+};
 
-export default config;
+module.exports = config;

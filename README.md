@@ -6,7 +6,7 @@ React 项目模板
 
 ### build
 
-1. 使用 babel 来编译 ts 代码，用 babel 编译 ts 的缺点是无法利用 tsc 的类型检查，所以在 scripts 中的 test 使用`tsc --noEmit`来做类型检查。
+1. 使用 ts-loader 来编译 ts 代码，用 babel 编译 ts 的缺点是无法利用 tsc 的类型检查 & 会删除 class 的 private 属性
 2. 使用[babel-preset-react-app](https://www.npmjs.com/package/babel-preset-react-app)作为 babel 预设。
 3. 脚本使用 cross-env 来配置编译环境
 4. 使用 terser-webpack-plugin 压缩 js 输出代码
@@ -41,6 +41,6 @@ React 项目模板
 -   https://github.com/facebook/jest/issues/6053#issuecomment-383632515
 -   https://babeljs.io/docs/en/configuration
 
-3. 为什么[webpack.base.ts](./config/webpack.base.ts)中针对`global.css`的 module 参数单独做处理？
+3. 为什么[webpack.base.](./config/webpack.base.js)中针对`global.css`的 module 参数单独做处理？
 
 global.css 存在的意义是全局 css 的设置或者预设，比如引用 tailwindcss 等，如果进行 module 参数化处理，会导致 build 出来的 class 找不到对应 classname 而导致样式失效。

@@ -1,21 +1,30 @@
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import os from 'os';
-import TerserPlugin from 'terser-webpack-plugin';
-import { EntryObject } from 'webpack';
-import { WebpackConfiguration } from 'webpack-dev-server';
-import { getWebpackEntries } from './utils/getWebpackEntries';
-import { resolve } from './utils/resolve';
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { getWebpackEntries } = require('./utils/getWebpackEntries');
+const { resolve } = require('./utils/resolve');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
+const os = require('os');
 const clientRoot = resolve('src');
 
-export const generate = (isOptimization: boolean): WebpackConfiguration => {
+/**
+ * genrate webpack config
+ * @param isOptimization {boolean}
+ * @returns {import("webpack-dev-server").WebpackConfiguration}
+ */
+const generate = (isOptimization = false) => {
     console.log(`webpack build, isOptimization:${isOptimization}`);
-    const entries: EntryObject = {};
-    const htmlPlugins: HtmlWebpackPlugin[] = [];
+    /**
+     * @type {import("webpack").EntryObject}
+     */
+    const entries = {};
+    /**
+     * @type {HtmlWebpackPlugin[]}
+     */
+    const htmlPlugins = [];
 
     // vendor entry
-    entries['vendor'] = ['react', 'react-dom', '@reduxjs/toolkit', 'react-redux'];
+    entries['vendor'] = ['react', 'react-dom'];
 
     // html entries
     const rawEntries = getWebpackEntries(clientRoot);
@@ -23,14 +32,14 @@ export const generate = (isOptimization: boolean): WebpackConfiguration => {
     rawEntries.forEach((entry) => {
         const entryName = entry.entryName;
         entries[entryName] = {
-            import: [resolve('src/autoload.ts'), entry.entry],
+            import: [`${clientRoot}/autoload.ts`, entry.entry],
             dependOn: 'vendor',
         };
 
         /**
-         * @type {import('html-webpack-plugin'.Options)[]}
+         * @type {import('html-webpack-plugin'.Options)}
          */
-        const htmlPluginOptions: HtmlWebpackPlugin.Options = {
+        const htmlPluginOptions = {
             inject: true,
             filename: `${entry.entryName}.html`,
             template: entry.html,
@@ -51,7 +60,13 @@ export const generate = (isOptimization: boolean): WebpackConfiguration => {
             chunkFilename: isOptimization ? '[name].[contenthash:8].chunk.js' : '[name].chunk.js',
             assetModuleFilename: '[name].[contenthash:8][ext][query]',
         },
-        plugins: [...htmlPlugins, new MiniCssExtractPlugin()],
+        plugins: [
+            ...htmlPlugins,
+            new MiniCssExtractPlugin({
+                filename: 'css/[name].[contenthash:8].css',
+                chunkFilename: 'css/[id][name].[contenthash:8].chunk.css',
+            }),
+        ],
         resolve: {
             extensions: ['.js', '.jsx', '.ts', '.tsx'],
         },
@@ -66,9 +81,13 @@ export const generate = (isOptimization: boolean): WebpackConfiguration => {
                         },
                     },
                 },
+                { test: /\.([cm]?ts|tsx)$/, loader: 'ts-loader' },
                 {
-                    test: /\.(js|jsx|ts|tsx)$/,
+                    test: /\.(js|jsx)$/,
                     loader: 'babel-loader',
+                    resolve: {
+                        fullySpecified: false,
+                    },
                     options: {
                         cacheDirectory: true,
                     },
@@ -77,6 +96,22 @@ export const generate = (isOptimization: boolean): WebpackConfiguration => {
                     test: /\.css$/,
                     use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
                     include: [resolve('src/assets/css/global.css'), resolve('node_modules')],
+                },
+                {
+                    test: /\.less$/,
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                importLoaders: 3,
+                                modules: {
+                                    localIdentName: '[name]_[local]-[hash:8]',
+                                },
+                            },
+                        },
+                        'less-loader',
+                    ],
                 },
                 {
                     test: /\.css$/,
@@ -122,3 +157,5 @@ export const generate = (isOptimization: boolean): WebpackConfiguration => {
         },
     };
 };
+
+module.exports = { generate };
