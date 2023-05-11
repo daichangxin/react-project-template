@@ -81,9 +81,8 @@ const generate = (isOptimization = false) => {
                         },
                     },
                 },
-                { test: /\.([cm]?ts|tsx)$/, loader: 'ts-loader' },
                 {
-                    test: /\.(js|jsx)$/,
+                    test: /\.(js|jsx|ts|tsx)$/,
                     loader: 'babel-loader',
                     resolve: {
                         fullySpecified: false,

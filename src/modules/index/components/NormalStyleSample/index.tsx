@@ -12,5 +12,3 @@ export const NormalStyleSample: FC = () => {
         </div>
     );
 };
-
-NormalStyleSample.displayName = 'NormalStyleSample';
