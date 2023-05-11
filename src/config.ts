@@ -1,4 +1,4 @@
 export const config = {
     ENV: process.env.ENV,
-    isDev: window.location.port === '8080',
+    isDev: window.location.port.length > 3,
 };
